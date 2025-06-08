@@ -26,26 +26,66 @@ const infoSection = {
           className="rounded-full w-48 h-48 object-cover shadow-md"
         />
       </div>
-      <h2 className="text-2xl font-bold text-green-700">🌱🔄 Lifetime CO2 Emissions Calculator</h2>
+      <h2 className="text-2xl font-bold text-green-700">
+        🌱🔄 Lifetime CO2 Emissions Calculator
+      </h2>
       <p>
-        This quiz estimates your lifetime carbon footprint based on your lifestyle, home, travel, food, and purchases.
-        Your answers are anonymous and used only for this analysis. You can optionally save your results to our public leaderboard!
+        This quiz estimates your lifetime carbon footprint based on your
+        lifestyle, home, travel, food, and purchases. Your answers are anonymous
+        and used only for this analysis. You can optionally save your results to
+        our public leaderboard!
       </p>
       <p className="text-center">
         <strong>Sources / Assumptions:</strong>{" "}
       </p>
-        <ul className="list-disc ml-6">
-          <li>Worldometer&apos;s CO2 Average Emissions per Capita <a href="https://www.worldometers.info/co2-emissions/co2-emissions-per-capita/" className="text-green-700 font-semibold underline" target="_blank" rel="noopener noreferrer">CO₂ Emissions Data</a></li>
-          <li>The average human emits <span className="font-semibold text-green-700">4.8 tonnes</span> per year. </li>
-          <li>IEA&apos;s mid-range figure predicts the average human emitting <span className="font-semibold text-green-700">300 tonnes</span> in a lifetime.</li>
-          <li>The Gemini 2.0 Flash API model will process all data and conduct calculations.</li>
-          <li>The image of the Earth (above) is credit to Wikipedia, and is the Earth seen from Apollo</li>
-        </ul>
+      <ul className="list-disc ml-6">
+        <li>
+          Worldometer&apos;s CO2 Average Emissions per Capita{" "}
+          <a
+            href="https://www.worldometers.info/co2-emissions/co2-emissions-per-capita/"
+            className="text-green-700 font-semibold underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            CO₂ Emissions Data
+          </a>
+        </li>
+        <li>
+          The average human emits{" "}
+          <span className="font-semibold text-green-700">4.8 tonnes</span> per
+          year.{" "}
+        </li>
+        <li>
+          IEA&apos;s mid-range figure predicts the average human emitting{" "}
+          <span className="font-semibold text-green-700">300 tonnes</span> in a
+          lifetime.
+        </li>
+        <li>
+          The Gemini 2.0 Flash API model will process all data and conduct
+          calculations.
+        </li>
+        <li>
+          The image of the Earth (above) is credit to Wikipedia, and is the
+          Earth seen from Apollo
+        </li>
+      </ul>
       <p>
-        <strong>Note:</strong> This is an demonstrational educational tool, and due to AI limitations, we cannot guarantee 100% accuracy. <span className="text-green-700 font-semibold ">Questions without the * are not required.</span> AI Latency can vary. Allow at least 20 seconds before trying again.
+        <strong>Note:</strong> This is an demonstrational educational tool, and
+        due to AI limitations, we cannot guarantee 100% accuracy.{" "}
+        <span className="text-green-700 font-semibold ">
+          Questions without the * are not required.
+        </span>{" "}
+        AI Latency can vary. Allow at least 20 seconds before trying again.
       </p>
       <p>
-        <strong>Privacy:</strong> The data you send is <span className="font-semibold text-green-700">not seen by anyone</span> on the backend. It is sent securely to Gemini&apos;s AI model via a private API key. If you do not wish for your data to be processed by Gemini, do not answer this quiz. At the end, please only enter an <span className="font-semibold text-green-700">appropriate</span> username into the leaderboard, if you wish to be displayed to other users.
+        <strong>Privacy:</strong> The data you send is{" "}
+        <span className="font-semibold text-green-700">not seen by anyone</span>{" "}
+        on the backend. It is sent securely to Gemini&apos;s AI model via a
+        private API key. If you do not wish for your data to be processed by
+        Gemini, do not answer this quiz. At the end, please only enter an{" "}
+        <span className="font-semibold text-green-700">appropriate</span>{" "}
+        username into the leaderboard, if you wish to be displayed to other
+        users.
       </p>
       <p className="text-gray-700 text-center">
         <strong>Technical Details:</strong> Data from the form is sent via JSON
@@ -398,10 +438,12 @@ export default function OnboardingForm() {
   const [formData, setFormData] = useState<FormState>({});
   const [submitted, setSubmitted] = useState(false); // User answer stored
   const [errors, setErrors] = useState<string[]>([]); //If the user skips req fields, missing ones are outputted by label.
-  const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
+  const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(
+    null
+  );
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
-  
+
   // New state for leaderboard functionality
   const [showSaveOption, setShowSaveOption] = useState(false);
   const [uniqueName, setUniqueName] = useState("");
@@ -466,7 +508,9 @@ export default function OnboardingForm() {
 
       if (!response.ok) {
         const errorText = await response.text();
-        setApiError(`API error: ${response.status} ${response.statusText} - ${errorText}`);
+        setApiError(
+          `API error: ${response.status} ${response.statusText} - ${errorText}`
+        );
         setLoading(false);
         return;
       }
@@ -499,17 +543,15 @@ export default function OnboardingForm() {
     setSaveError(null);
 
     try {
-      const { error } = await supabase
-        .from("carbon_leaderboard")
-        .insert([
-          {
-            unique_name: uniqueName.trim(),
-            total_co2_lifetime: analysisResult.totalCO2Lifetime,
-            percent_above_average: analysisResult.percentAboveAverage,
-            top_contributors: analysisResult.topContributors,
-            recommendations: analysisResult.recommendations,
-          },
-        ]);
+      const { error } = await supabase.from("carbon_leaderboard").insert([
+        {
+          unique_name: uniqueName.trim(),
+          total_co2_lifetime: analysisResult.totalCO2Lifetime,
+          percent_above_average: analysisResult.percentAboveAverage,
+          top_contributors: analysisResult.topContributors,
+          recommendations: analysisResult.recommendations,
+        },
+      ]);
 
       if (error) {
         throw new Error(error.message);
@@ -588,24 +630,36 @@ export default function OnboardingForm() {
                   Based on your predicted lifespan and the data provided.
                 </p>
               </div>
-              
-              <div className={`p-6 rounded-lg border ${
-                analysisResult.percentAboveAverage > 0 
-                  ? 'bg-red-50 border-red-200' 
-                  : 'bg-green-50 border-green-200'
-              }`}>
-                <h3 className={`text-lg font-semibold mb-2 ${
-                  analysisResult.percentAboveAverage > 0 ? 'text-red-700' : 'text-green-800'
-                }`}>
+
+              <div
+                className={`p-6 rounded-lg border ${
+                  analysisResult.percentAboveAverage > 0
+                    ? "bg-red-50 border-red-200"
+                    : "bg-green-50 border-green-200"
+                }`}
+              >
+                <h3
+                  className={`text-lg font-semibold mb-2 ${
+                    analysisResult.percentAboveAverage > 0
+                      ? "text-red-700"
+                      : "text-green-800"
+                  }`}
+                >
                   📊 Comparison to Global Average
                 </h3>
-                <p className={`text-3xl font-bold ${
-                  analysisResult.percentAboveAverage > 0 ? 'text-red-700' : 'text-green-600'
-                }`}>
-                  {analysisResult.percentAboveAverage > 0 ? '+' : ''}{analysisResult.percentAboveAverage}%
+                <p
+                  className={`text-3xl font-bold ${
+                    analysisResult.percentAboveAverage > 0
+                      ? "text-red-700"
+                      : "text-green-600"
+                  }`}
+                >
+                  {analysisResult.percentAboveAverage > 0 ? "+" : ""}
+                  {analysisResult.percentAboveAverage}%
                 </p>
                 <p className="text-sm text-gray-600 mt-1">
-                  {analysisResult.percentAboveAverage > 0 ? 'Above' : 'Below'} global average
+                  {analysisResult.percentAboveAverage > 0 ? "Above" : "Below"}{" "}
+                  global average
                 </p>
               </div>
             </div>
@@ -621,9 +675,7 @@ export default function OnboardingForm() {
                     <span className="bg-amber-200 text-amber-700 px-3 py-1 rounded-full text-sm font-medium">
                       #{index + 1}
                     </span>
-                    <span className="text-gray-700">
-                      {contributor}
-                    </span>
+                    <span className="text-gray-700">{contributor}</span>
                   </div>
                 ))}
               </div>
@@ -649,9 +701,12 @@ export default function OnboardingForm() {
             {/* Save to Leaderboard Section */}
             {showSaveOption && !saveSuccess && (
               <div className="bg-purple-50 p-6 rounded-lg border border-purple-200">
-                <h3 className="text-lg font-semibold text-purple-700 mb-4">🏆 Save to Public Leaderboard</h3>
+                <h3 className="text-lg font-semibold text-purple-700 mb-4">
+                  🏆 Save to Public Leaderboard
+                </h3>
                 <p className="text-gray-700 mb-4">
-                  Want to see how you compare with others online, so please save to the public leaderboard.
+                  Want to see how you compare with others online, so please save
+                  to the public leaderboard.
                 </p>
                 <div className="flex gap-3 items-end">
                   <div className="flex-1">
@@ -684,8 +739,13 @@ export default function OnboardingForm() {
             {/* Success message */}
             {saveSuccess && (
               <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
-                <p className="font-semibold">🎉 Success! Your results have been saved to the leaderboard.</p>
-                <a href="/history" className="text-green-600 hover:text-green-800 underline">
+                <p className="font-semibold">
+                  🎉 Success! Your results have been saved to the leaderboard.
+                </p>
+                <a
+                  href="/history"
+                  className="text-green-600 hover:text-green-800 underline"
+                >
                   View the leaderboard -→
                 </a>
               </div>
