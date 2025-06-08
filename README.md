@@ -1,6 +1,6 @@
 # Verda: Track More, Waste Less
 
-Winner of Environmental Track for KTHacks 2025
+Winner of Environmental Track for KTHacks 2025 (over 200 participants from 5 different continents).
 
 **Devpost: [https://devpost.com/software/verda-edo7uq](https://devpost.com/software/verda-edo7uq)**
 
